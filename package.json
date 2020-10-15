@@ -1,0 +1,19 @@
+{
+  "name": "youmu-chan",
+  "version": "1.0.0",
+  "description": "Youmu-chan bot for Spice and Wolf Inn Discord",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HasithaAbeysekera/YoumuChan2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HasithaAbeysekera/YoumuChan2/issues"
+  },
+  "homepage": "https://github.com/HasithaAbeysekera/YoumuChan2#readme"
+}
