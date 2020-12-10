@@ -19,10 +19,10 @@ client.muted = []; //muted users are here
 client.registry
     .registerDefaultTypes()
     .registerGroups([
-        ['reactions', 'ImageReactions'],
-        ['moderation', 'Moderation'],
-        ['admin', 'Admin'],
-        ['misc', 'Misc']
+        // ['reactions', 'ImageReactions'],
+        // ['moderation', 'Moderation'],
+        // ['admin', 'Admin'],
+        // ['misc', 'Misc']
     ])
     .registerDefaultGroups()
     .registerDefaultCommands({ 
