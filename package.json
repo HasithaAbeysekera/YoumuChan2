@@ -10,10 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/HasithaAbeysekera/YoumuChan2.git"
   },
-  "author": "",
+  "author": "Hasitha Abeysekera",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/HasithaAbeysekera/YoumuChan2/issues"
   },
-  "homepage": "https://github.com/HasithaAbeysekera/YoumuChan2#readme"
+  "homepage": "https://github.com/HasithaAbeysekera/YoumuChan2#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "discord.js-commando": "github:discordjs/Commando"
+  },
+  "devDependencies": {}
 }

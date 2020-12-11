@@ -1,4 +1,4 @@
-const Commando = require('discord.js-commando');
+const Commando = require('discord.js-Commando');
 const path = require('path');
 const discord = require('discord.js');
 const ownerIds = require("./config.json").OwnerIds;
@@ -9,7 +9,6 @@ const client = new Commando.Client({
 });
 const token = require("./config.json").token;
 const fs = require('fs');
-
 
 
 /* Trackers - used to track various bot states etc */

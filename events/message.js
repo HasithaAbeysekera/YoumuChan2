@@ -4,6 +4,6 @@ module.exports = async (client, message) => {
         return;
     }
     if (!message.content.startsWith(client.commandPrefix)) {
-            return;
+        return;
     }
 };
