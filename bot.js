@@ -14,6 +14,7 @@ const fs = require('fs');
 /* Trackers - used to track various bot states etc */
 client.muted = []; //muted users are here
 
+client.roleEmojis = {}// Emojis used in rolelist
 
 client.registry
     .registerDefaultTypes()
