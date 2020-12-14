@@ -14,7 +14,20 @@ const fs = require('fs');
 /* Trackers - used to track various bot states etc */
 client.muted = []; //muted users are here
 
-client.roleEmojis = {}// Emojis used in rolelist
+
+client.ListRoles = {//News feed roles list. Format emojiname : Role name - description
+    seiunhigh :'Among Umas-Claim this role to be pinged for Among Us sessions.'
+}
+
+client.ListChannels = {//News feed channel list. Format emojiname : Role name - channelID - description
+    woah :'Dokutah-710108520460189706', //arknights
+    kongouswear :'Admiral-710111338411589688', //azur lane
+    wgfacepalm :"Eternal Return-710110893870022736", //eternal return
+    rinwin :'Project Sekai-751699972931452988', //project sekai
+    ron :'Punishing Gray Raven-779600957532274748', //punishing gray raven
+    reimu :'Shadowverse-710111126658220073', //shadowverse
+    suzusmile :'Horse Trainer-710111441503518780- testing', //uma musume
+};
 
 client.registry
     .registerDefaultTypes()

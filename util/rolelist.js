@@ -1,4 +1,7 @@
+const Discord = require("discord.js");
+const { getEmojiByName, getChannelById } = require("./util");
 const rolelistChannel = require ('../config.json').rolelistChannel;
+const util = require('./util');
 
 let addReactions = (message, reactions) => {    
     message.react(reactions[0]);
@@ -10,50 +13,79 @@ let addReactions = (message, reactions) => {
     
 module.exports = async (client) => {
 
-    let channel = client.guilds.cache.first().channels.cache.find(u => u.id == rolelistChannel); 
+
     
-    const getEmoji = (emojiName) => 
-    client.emojis.cache.find(emoji => emoji.name === emojiName);
+    const RoleListEmbed = new Discord.MessageEmbed()
+        .setTitle(`__**News Feed Channels!!**__`)
+        .setDescription(`React here to be given the following roles and access to channels.\nTo remove yourself, simply unreact (you may have to react and unreact if reactions have been cleared\n`)
+        // .addField(`__**Self Assign Roles**__`, '\u200b')
+        // .addField(`====================`, `\u200b`);
+        // .setDescription(emoji.animated ? `Animated` : "")
+        // .setColor(creator.displayHexColor)
+        // .setThumbnail(`${emoji.url}`)
+        // .setAuthor(`Self Assign Roles`, `${client.user.displayAvatarURL({dynamic: true})}`)
+        // .setFooter(`Added by: ${creator.tag}`, `${creator.displayAvatarURL({ dynamic: true})}`)
 
-    const getChannel = (channelid) => 
-    client.channels.cache.find(channel => channel.id === channelid);
+    // adding Roles
+    let embedRolesText = ''; 
+    const RoleReactions = [];
 
-    client.RoleEmojis = {
-        woah : 'Dokutah-710108520460189706', //arknights
-        kongouswear : 'Admiral-710111338411589688', //azur lane
-        wgfacepalm : 'Eternal Return-710110893870022736', //eternal return
-        rinwin : 'Project Sekai-751699972931452988', //project sekai
-        ron : 'Punishing Gray Raven-779600957532274748', //punishing gray raven
-        reimu : 'Shadowverse-710111126658220073', //shadowverse
-        suzusmile : 'Horse Trainer-710111441503518780', //uma musume
+    for (const key in client.ListRoles) {
+
+        const emoji = getEmojiByName(client, key);
+        RoleReactions.push(emoji);
+
+        const roleName = util.getRoleByName(client, client.ListRoles[key].split('-')[0]);
+        const description = client.ListRoles[key].split('-')[1]; 
+        
+        embedRolesText += `${emoji} ${roleName} - ${description}`;       
     };
+    RoleListEmbed.addField(`\u200b`, `__**Self Assign Roles**__`, false);
+    RoleListEmbed.addField(`\u200b`, embedRolesText);
+        
+    // adding channels
+    let embedChannelsEmojiRole = '';
+    let embedChannelsChannelName = '';
+    let embedChannelsDesc = '';
+    const ChannelReactions = [];   
 
-    const reactions = []
+    for (const key in client.ListChannels) {
 
-    let emojiText = 'WIP (Roles working...sorta)\nFeel free to test\n\n'
-    for (const key in client.RoleEmojis) {
+        const emoji = getEmojiByName(client, key);
+        ChannelReactions.push(emoji);
 
-        const emoji = getEmoji(key);
-        reactions.push(emoji);
+        const role = util.getRoleByName(client, client.ListChannels[key].split('-')[0]);
+        const roleChannel = util.getChannelById(client, client.ListChannels[key].split('-')[1]); 
+        const description = client.ListChannels[key].split('-')[2]; 
 
-        const role = client.RoleEmojis[key].split('-')[0];
-        const roleChannel = client.guilds.cache.first().channels.cache.find(u => u.id == client.RoleEmojis[key].split('-')[1]); 
-
-        emojiText += `${emoji} = ${role} - ${roleChannel}\n`;
+        embedChannelsEmojiRole += `${emoji} ${role}\n`;
+        embedChannelsChannelName += `${roleChannel}${description ? ` - ${description}` : ``}\n`;
+        // embedChannelsDesc += `${ description ? `${description}` : `\u200b`}\n`;
     }
+    RoleListEmbed.addField(`\u200b`, `__**Self Assign Channels**__`, false);
+    RoleListEmbed.addField(`\u200b`, embedChannelsEmojiRole, true);
+    RoleListEmbed.addField(`\u200b`, embedChannelsChannelName, true);
+    // RoleListEmbed.addField(`\u200b`, embedChannelsDesc, true);
+
+    
+    //sending the embed
+    let channel = getChannelById(client, rolelistChannel);
     
     channel.messages.fetch().then((messages) => {
         if(messages.size == 0){
             //send new msg 
-            channel.send(emojiText).then(message => {
-                addReactions(message,reactions);
+            channel.send(RoleListEmbed).then(message => {
+                addReactions(message,RoleReactions);
+                addReactions(message,ChannelReactions);
             });
         } else {
-            //edit msg
             for (const message of messages) {
-                message[1].edit(emojiText);
-                addReactions(message[1], reactions);
+            // //     console.log(`=====\n${message.content}\n=====\n`);
+            message[1].edit(RoleListEmbed);
+                //  message[1].edit(RolesEmbed);
+            addReactions(message[1], RoleReactions);
+            addReactions(message[1], ChannelReactions);
             }
         }
-    })
+    });
 }
